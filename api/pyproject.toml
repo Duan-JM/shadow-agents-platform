@@ -1,0 +1,113 @@
+[project]
+name = "shadow-agents-api"
+version = "0.1.0"
+description = "Shadow Agents Platform API Service"
+readme = "README.md"
+requires-python = ">=3.11,<3.13"
+license = "MIT"
+authors = [
+    {name = "Shadow Agents Platform Team"}
+]
+
+dependencies = [
+    # Web 框架
+    "flask~=3.1.2",
+    "flask-sqlalchemy~=3.1.1",
+    "flask-cors~=6.0.0",
+    "flask-login~=0.6.3",
+    "flask-migrate~=4.0.7",
+    "gunicorn~=23.0.0",
+    "gevent~=25.9.1",
+    
+    # 异步任务
+    "celery~=5.5.2",
+    "redis[hiredis]~=6.1.0",
+    
+    # 数据库
+    "sqlalchemy~=2.0.29",
+    "psycopg2-binary~=2.9.6",
+    
+    # AI 模型
+    "openai~=1.61.0",
+    "tiktoken~=0.9.0",
+    
+    # 数据处理
+    "pandas~=2.2.2",
+    "numpy~=1.26.4",
+    "pydantic~=2.11.4",
+    "pyyaml~=6.0.1",
+    
+    # HTTP 客户端
+    "httpx[socks]~=0.27.0",
+    
+    # 认证和安全
+    "pyjwt~=2.10.1",
+    "authlib==1.6.4",
+    "pycryptodome==3.19.1",
+    
+    # 文档处理
+    "beautifulsoup4==4.12.2",
+    "pypdfium2==4.30.0",
+    "python-docx~=1.1.0",
+    "openpyxl~=3.1.5",
+    "markdown~=3.5.1",
+    
+    # 向量数据库 (可选)
+    "pymilvus~=2.5.0",
+    
+    # 工具
+    "python-dotenv==1.0.1",
+    "chardet~=5.1.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest~=8.3.2",
+    "pytest-cov~=4.1.0",
+    "pytest-mock~=3.14.0",
+    "black~=24.0.0",
+    "ruff~=0.12.3",
+    "mypy~=1.17.1",
+]
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.black]
+line-length = 120
+target-version = ['py311']
+
+[tool.ruff]
+line-length = 120
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "W"]
+ignore = ["E501"]  # 行长度由 black 处理
+
+[tool.setuptools]
+packages = [
+    "configs",
+    "controllers",
+    "core",
+    "extensions",
+    "libs",
+    "migrations",
+    "models",
+    "repositories",
+    "services"
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "-v --cov=. --cov-report=html --cov-report=term-missing"
+
+[tool.mypy]
+python_version = "3.11"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = false
